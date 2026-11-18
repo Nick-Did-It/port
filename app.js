@@ -107,9 +107,10 @@ loadPieces();
   const narrow = matchMedia('(max-aspect-ratio: 1/1)').matches;
   fetch('scene/manifest.json').then(r => r.ok ? r.json() : null).then(m => {
     if (!m) return;
-    const src = narrow && m.phone ? m.phone : m.loop;
-    if (m.poster) video.poster = m.poster;
-    video.src = src; video.hidden = false; canvas.hidden = true;
+    video.poster = narrow && m.phone ? m.phone : m.poster;
+    video.hidden = false; canvas.hidden = true;
+    if (narrow) return; // phones get the portrait still; the loop is landscape
+    if (m.webm && video.canPlayType('video/webm')) video.src = m.webm; else video.src = m.loop;
     if (!reduce) video.play().catch(() => {});
   }).catch(() => {});
 
