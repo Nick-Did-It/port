@@ -9,6 +9,7 @@ const $ = s => document.querySelector(s);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
 let works = [];
 let vimeo = {};
+let pendingOpen = null;
 let current = 0;
 
 // ---------- grid: muted previews that play while on screen ----------
@@ -51,6 +52,7 @@ function show(i) {
   current = (i + works.length) % works.length;
   const w = works[current];
   const box = $('#v-media');
+  clearTimeout(show.fallback); show.token = (show.token || 0) + 1;
   box.querySelectorAll('video').forEach(v => v.pause());
   let m;
   if (w.piece.kind === 'video' && vimeo[w.piece.id]) {
@@ -61,11 +63,11 @@ function show(i) {
     m.allowFullscreen = true;
     m.style.aspectRatio = `${w.asset.width} / ${w.asset.height}`;
     m.style.setProperty('--r', w.asset.width / w.asset.height);
-    const token = (show.token = (show.token || 0) + 1);
+    const token = show.token;
     let ready = false;
     const onMsg = ev => { if (ev.source === m.contentWindow) ready = true; };
     addEventListener('message', onMsg);
-    setTimeout(() => {
+    show.fallback = setTimeout(() => {
       removeEventListener('message', onMsg);
       if (ready || token !== show.token || !dlg.open) return;
       const v = el('video'); Object.assign(v, { src: `previews/${w.piece.id}.mp4`, autoplay: true, loop: true, muted: true, playsInline: true });
@@ -90,18 +92,19 @@ function show(i) {
   $('#v-strip').children[current]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
 }
 function openViewer(i = 0) {
-  if (!works.length) return;
+  if (!works.length) { pendingOpen = i; $('#open-viewer').classList.add('loading'); return; }
   $('#scene').pause();
   document.querySelectorAll('.piece video').forEach(v => v.pause());
   dlg.showModal();
   show(i);
 }
 function closeViewer() {
+  clearTimeout(show.fallback); show.token = (show.token || 0) + 1;
   dlg.querySelectorAll('video').forEach(v => v.pause());
   $('#v-media').replaceChildren();
   if (dlg.open) dlg.close();
   document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); });
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) $('#scene').play().catch(() => {});
+  heroResume();
 }
 $('#v-close').onclick = closeViewer;
 $('#v-prev').onclick = () => show(current - 1);
@@ -141,44 +144,66 @@ async function load() {
       t.append(im); t.onclick = () => show(i); return t;
     }));
     status.hidden = works.length > 0;
+    $('#open-viewer').classList.remove('loading');
+    if (pendingOpen !== null) { openViewer(pendingOpen); pendingOpen = null; }
     const hash = location.hash.slice(1);
     const at = works.findIndex(w => w.piece.id === hash);
     if (at >= 0) openViewer(at);
   } catch (err) {
     status.hidden = false;
     status.textContent = 'The collection could not load. Please try again, or contact Nick for samples.';
+    $('#open-viewer').classList.remove('loading');
+    const retry = el('button', 'cta retry', 'Try again'); retry.type = 'button'; retry.onclick = () => { retry.remove(); status.textContent = 'Loading the work…'; load(); };
+    status.after(retry);
     console.error(err);
   }
 }
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) document.querySelectorAll('video').forEach(v => v.pause());
+  if (document.hidden) { document.querySelectorAll('video').forEach(v => v.pause()); return; }
+  if (dlg.open) return;
+  heroResume();
+  document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); });
 });
 load();
 
-// ---------- hero: garden scene loop, or moving geometry until it exists ----------
+// ---------- hero: garden loop (landscape or portrait), moving geometry until it exists ----------
+let heroResume = () => {};
 (function hero() {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const stage = $('#stage'), video = $('#scene'), canvas = $('#geo'), tv = $('#tv');
-  const narrow = () => matchMedia('(max-aspect-ratio: 1/1)').matches;
-  // Keep the TV hotspot glued to the TV however object-fit:cover crops the frame.
+  const portrait = matchMedia('(max-aspect-ratio: 1/1)');
+  let m = null, mode = null;
   function place() {
-    if (video.hidden || narrow()) { tv.hidden = true; return; }
-    const W = stage.clientWidth, H = stage.clientHeight, s = Math.max(W / 1920, H / 1080);
-    const fx = parseFloat(getComputedStyle(video).objectPosition) / 100 || 0.5;
-    const ox = (W - 1920 * s) * fx, oy = (H - 1080 * s) * 0.5;
-    Object.assign(tv.style, { left: ox + TV.x * 1920 * s + 'px', top: oy + TV.y * 1080 * s + 'px', width: TV.w * 1920 * s + 'px', height: TV.h * 1080 * s + 'px' });
+    if (!m || video.hidden) { tv.hidden = true; return; }
+    const ph = portrait.matches, box = ph ? m.phoneTv : m.tv;
+    if (!box) { tv.hidden = true; return; }
+    const FW = ph ? 1080 : 1920, FH = ph ? 1920 : 1080;
+    const W = stage.clientWidth, H = stage.clientHeight, sc = Math.max(W / FW, H / FH);
+    const pos = getComputedStyle(video).objectPosition.split(' ').map(v => parseFloat(v) / 100);
+    const ox = (W - FW * sc) * (pos[0] ?? .5), oy = (H - FH * sc) * (pos[1] ?? .5);
+    Object.assign(tv.style, { left: ox + box[0] * FW * sc + 'px', top: oy + box[1] * FH * sc + 'px',
+      width: (box[2] - box[0]) * FW * sc + 'px', height: (box[3] - box[1]) * FH * sc + 'px' });
     tv.hidden = false;
   }
-  addEventListener('resize', place);
-  fetch('scene/manifest.json').then(r => r.ok ? r.json() : null).then(m => {
+  function pick() {
     if (!m) return;
-    video.poster = narrow() && m.phone ? m.phone : m.poster;
-    video.hidden = false; canvas.hidden = true; place();
-    const webm = video.canPlayType('video/webm');
-    if (narrow()) { if (!m.phoneLoop) return; video.src = webm && m.phoneWebm ? m.phoneWebm : m.phoneLoop; }
-    else video.src = webm && m.webm ? m.webm : m.loop;
-    if (!reduce) video.play().catch(() => {});
-  }).catch(() => {});
+    const ph = portrait.matches;
+    const next = ph ? 'p' : 'l';
+    if (next !== mode) {
+      mode = next;
+      const webm = video.canPlayType('video/webm');
+      video.poster = ph ? (m.phone || m.poster) : m.poster;
+      const src = ph ? (webm && m.phoneWebm ? m.phoneWebm : m.phoneLoop) : (webm && m.webm ? m.webm : m.loop);
+      if (src) video.src = src; else video.removeAttribute('src');
+      video.hidden = false; canvas.hidden = true;
+      heroResume();
+    }
+    place();
+  }
+  heroResume = () => { if (!reduce && video.src && !dlg.open && !document.hidden) video.play().catch(() => {}); };
+  portrait.addEventListener('change', pick);
+  addEventListener('resize', place);
+  fetch('scene/manifest.json').then(r => r.ok ? r.json() : null).then(j => { m = j; pick(); }).catch(() => {});
 
   const ctx = canvas.getContext('2d');
   const colors = ['#E0702A', '#F2B33D', '#C2452D', '#7A8B3A', '#8C5A9E', '#F4D58D'];

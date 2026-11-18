@@ -68,7 +68,7 @@ a:hover{text-decoration-thickness:2px}
 .v-close:hover{background:var(--ember)}
 .viewer-body{overflow:hidden;display:grid;grid-template-columns:64px 1fr 64px;align-items:center;min-height:0;padding:0 8px}
 .v-media{height:100%;min-height:0;display:grid;place-items:center}
-.v-media video,.v-media img{max-width:100%;max-height:calc(100dvh - 250px);width:auto;height:auto;display:block;border-radius:4px;box-shadow:0 30px 80px #000a}
+.v-media video,.v-media img{max-width:100%;max-height:100cqh;width:auto;height:auto;display:block;border-radius:4px;box-shadow:0 30px 80px #000a}
 .v-nav{height:64px;width:56px;border:0;background:none;color:#F2C14E;font-size:3.4rem;line-height:1;cursor:pointer;transition:transform .2s,color .2s}
 .v-nav:hover{color:var(--ember);transform:scale(1.15)}
 .v-caption{text-align:center;padding:12px 20px 4px;max-width:46rem;margin:0 auto}
@@ -79,6 +79,10 @@ a:hover{text-decoration-thickness:2px}
 .v-thumb{flex:0 0 auto;width:96px;height:64px;padding:0;border:2px solid transparent;border-radius:4px;overflow:hidden;background:#2A1C14;cursor:pointer;opacity:.55;transition:opacity .2s,border-color .2s}
 .v-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .v-thumb:hover,.v-thumb[aria-current=true]{opacity:1;border-color:#F2C14E}
-@media(max-width:700px){.v-media video,.v-media img{max-height:calc(100dvh - 190px)}.viewer-body{grid-template-columns:1fr}.v-nav{display:none}.v-caption p:not(.v-tag){display:none}}
-.v-media .v-vimeo{border:0;display:block;height:auto;width:min(calc(100vw - 160px),calc((100dvh - 250px) * var(--r,.5625)));border-radius:4px;box-shadow:0 30px 80px #000a}
-@media(max-width:700px){.v-media .v-vimeo{width:min(100vw,calc((100dvh - 190px) * var(--r,.5625)))}}
+@media(max-width:700px){.viewer-body{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;padding:0}.v-media{grid-column:1/-1;grid-row:1}.v-nav{grid-row:2;height:48px;font-size:2.6rem}#v-prev{grid-column:1;justify-self:start;margin-left:12px}#v-next{grid-column:2;justify-self:end;margin-right:12px}.v-caption p:not(.v-tag){display:none}}
+.v-media{container-type:size}
+.v-media .v-vimeo{border:0;display:block;height:auto;width:min(100cqw,calc(100cqh * var(--r,.5625)));border-radius:4px;box-shadow:0 30px 80px #000a}
+.cta.loading{opacity:.7;cursor:progress}
+.cta.loading::after{content:'';width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.retry{margin-top:12px}
