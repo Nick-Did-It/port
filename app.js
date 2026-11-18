@@ -52,29 +52,36 @@ function show(i) {
   current = (i + works.length) % works.length;
   const w = works[current];
   const box = $('#v-media');
-  clearTimeout(show.fallback); show.token = (show.token || 0) + 1;
+  clearTimeout(show.fallback); clearTimeout(show.retry); show.token = (show.token || 0) + 1;
   box.querySelectorAll('video').forEach(v => v.pause());
   let m;
   if (w.piece.kind === 'video' && vimeo[w.piece.id]) {
     const u = new URL(vimeo[w.piece.id]);
-    for (const [k, v] of Object.entries({ autoplay: 1, title: 0, byline: 0, portrait: 0, dnt: 1, color: 'E0702A' })) u.searchParams.set(k, v);
+    for (const [k, v] of Object.entries({ autoplay: 1, title: 0, byline: 0, portrait: 0, dnt: 1, color: 'E0702A', api: 1 })) u.searchParams.set(k, v);
     m = el('iframe', 'v-vimeo');
+    m.referrerPolicy = 'strict-origin-when-cross-origin';
     Object.assign(m, { src: u, allow: 'autoplay; fullscreen; picture-in-picture', title: w.piece.name });
     m.allowFullscreen = true;
     m.style.aspectRatio = `${w.asset.width} / ${w.asset.height}`;
     m.style.setProperty('--r', w.asset.width / w.asset.height);
     const token = show.token;
-    let ready = false;
-    const onMsg = ev => { if (ev.source === m.contentWindow) ready = true; };
+    let ready = false, retried = false;
+    const onMsg = ev => { if (ev.source === m.contentWindow) ready = true; }; // the error page sends nothing
     addEventListener('message', onMsg);
+    // Safari sometimes loads the first Vimeo player without the page's address, so Vimeo
+    // shows its privacy error; a second load works. Reload once if it isn't ready.
+    show.retry = setTimeout(() => {
+      if (ready || token !== show.token || !dlg.open) return;
+      retried = true; const r = new URL(u); r.searchParams.set('_r', Date.now()); m.src = r;
+    }, 3500);
     show.fallback = setTimeout(() => {
       removeEventListener('message', onMsg);
       if (ready || token !== show.token || !dlg.open) return;
       const v = el('video'); Object.assign(v, { src: `previews/${w.piece.id}.mp4`, autoplay: true, loop: true, muted: true, playsInline: true });
       v.style.aspectRatio = m.style.aspectRatio;
-      const note = el('a', 'v-fallback', 'Open full video on Vimeo ↗'); note.href = vimeo[w.piece.id].replace('player.vimeo.com/video/', 'vimeo.com/').replace('?h=', '/'); note.target = '_blank'; note.rel = 'noopener';
+      const note = el('a', 'v-fallback', 'Open full video on Vimeo'); note.href = vimeo[w.piece.id].replace('player.vimeo.com/video/', 'vimeo.com/').replace('?h=', '/'); note.target = '_blank'; note.rel = 'noopener';
       box.replaceChildren(v, note);
-    }, 8000);
+    }, 10000);
   } else if (w.piece.kind === 'video') {
     m = el('video');
     Object.assign(m, { src: w.asset.file, poster: w.asset.poster || '', controls: true, playsInline: true, autoplay: true });
@@ -99,7 +106,7 @@ function openViewer(i = 0) {
   show(i);
 }
 function closeViewer() {
-  clearTimeout(show.fallback); show.token = (show.token || 0) + 1;
+  clearTimeout(show.fallback); clearTimeout(show.retry); show.token = (show.token || 0) + 1;
   dlg.querySelectorAll('video').forEach(v => v.pause());
   $('#v-media').replaceChildren();
   if (dlg.open) dlg.close();
