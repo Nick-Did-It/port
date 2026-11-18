@@ -11,21 +11,37 @@ let works = [];
 let vimeo = {};
 let current = 0;
 
-// ---------- grid ----------
+// ---------- grid: muted previews that play while on screen ----------
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const seen = new IntersectionObserver(entries => {
+  for (const e of entries) {
+    const v = e.target;
+    if (e.isIntersecting && !reduceMotion && !dlg.open) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); }
+    else v.pause();
+  }
+}, { rootMargin: '120px 0px', threshold: 0.25 });
 function tile(w, i) {
   const art = el('article', 'piece');
-  if (w.asset.width > w.asset.height) art.classList.add('wide');
   const btn = el('button', 'piece-media');
   btn.type = 'button';
   btn.setAttribute('aria-label', `Watch ${w.piece.name}`);
-  const img = el('img');
-  Object.assign(img, { src: w.asset.poster || w.asset.file, alt: w.piece.alt || '', loading: 'lazy', decoding: 'async', width: w.asset.width, height: w.asset.height });
-  btn.append(img);
-  if (w.piece.kind === 'video') btn.append(el('span', 'play-label'));
+  const poster = w.asset.poster || (w.piece.kind !== 'video' ? w.asset.file : '');
+  if (w.piece.kind === 'video') {
+    const v = el('video');
+    Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'none', poster });
+    v.defaultMuted = true;
+    v.setAttribute('muted', ''); v.setAttribute('aria-hidden', 'true');
+    v.dataset.src = `previews/${w.piece.id}.mp4`;
+    btn.append(v); seen.observe(v);
+  } else {
+    const img = el('img');
+    Object.assign(img, { src: poster, alt: w.piece.alt || '', loading: 'lazy', decoding: 'async' });
+    btn.append(img);
+  }
   btn.addEventListener('click', () => openViewer(i));
-  const meta = el('div', 'piece-meta');
-  meta.append(el('span', 'tag', w.piece.type), el('span', 'format', w.piece.kind === 'video' ? 'Video' : 'Still'));
-  art.append(btn, meta, el('h3', '', w.piece.name), el('p', 'description', w.piece.description));
+  const cap = el('div', 'piece-cap');
+  cap.append(el('h3', '', w.piece.name), el('p', 'tag', w.piece.type || ''));
+  art.append(btn, cap);
   return art;
 }
 
@@ -45,6 +61,18 @@ function show(i) {
     m.allowFullscreen = true;
     m.style.aspectRatio = `${w.asset.width} / ${w.asset.height}`;
     m.style.setProperty('--r', w.asset.width / w.asset.height);
+    const token = (show.token = (show.token || 0) + 1);
+    let ready = false;
+    const onMsg = ev => { if (ev.source === m.contentWindow) ready = true; };
+    addEventListener('message', onMsg);
+    setTimeout(() => {
+      removeEventListener('message', onMsg);
+      if (ready || token !== show.token || !dlg.open) return;
+      const v = el('video'); Object.assign(v, { src: `previews/${w.piece.id}.mp4`, autoplay: true, loop: true, muted: true, playsInline: true });
+      v.style.aspectRatio = m.style.aspectRatio;
+      const note = el('a', 'v-fallback', 'Open full video on Vimeo ↗'); note.href = vimeo[w.piece.id].replace('player.vimeo.com/video/', 'vimeo.com/').replace('?h=', '/'); note.target = '_blank'; note.rel = 'noopener';
+      box.replaceChildren(v, note);
+    }, 8000);
   } else if (w.piece.kind === 'video') {
     m = el('video');
     Object.assign(m, { src: w.asset.file, poster: w.asset.poster || '', controls: true, playsInline: true, autoplay: true });
@@ -64,6 +92,7 @@ function show(i) {
 function openViewer(i = 0) {
   if (!works.length) return;
   $('#scene').pause();
+  document.querySelectorAll('.piece video').forEach(v => v.pause());
   dlg.showModal();
   show(i);
 }
@@ -71,6 +100,7 @@ function closeViewer() {
   dlg.querySelectorAll('video').forEach(v => v.pause());
   $('#v-media').replaceChildren();
   if (dlg.open) dlg.close();
+  document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); });
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) $('#scene').play().catch(() => {});
 }
 $('#v-close').onclick = closeViewer;
@@ -144,8 +174,9 @@ load();
     if (!m) return;
     video.poster = narrow() && m.phone ? m.phone : m.poster;
     video.hidden = false; canvas.hidden = true; place();
-    if (narrow()) return;
-    video.src = m.webm && video.canPlayType('video/webm') ? m.webm : m.loop;
+    const webm = video.canPlayType('video/webm');
+    if (narrow()) { if (!m.phoneLoop) return; video.src = webm && m.phoneWebm ? m.phoneWebm : m.phoneLoop; }
+    else video.src = webm && m.webm ? m.webm : m.loop;
     if (!reduce) video.play().catch(() => {});
   }).catch(() => {});
 
