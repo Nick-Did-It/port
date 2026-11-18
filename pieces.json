@@ -48,15 +48,6 @@
     "alt": "Skincare concept independent spec concept"
   },
   {
-    "id": "soccer",
-    "name": "After hours",
-    "description": "A soccer-ball concept set on a rain-soaked night pitch.",
-    "type": "Product launch",
-    "kind": "video",
-    "source": "~/Bhalu-Video/delivery/soccer-spec/soccer-spec-polished-v001-1080x1920.mp4",
-    "alt": "After hours independent spec concept"
-  },
-  {
     "id": "emberlea",
     "name": "EMBERLEA",
     "description": "A fictional product carousel cut into a 15-second reel.",
@@ -110,5 +101,41 @@
     "kind": "video",
     "source": "~/Bhalu-Video/higgsfield-portfolio-practice-20261117/exports/running-shoe-three-shot-v003-music.mp4",
     "alt": "Night run independent spec concept"
+  },
+  {
+    "id": "room-that-assembles",
+    "name": "The Room That Assembles",
+    "description": "Pieces of a studio drift in as point clouds and click into place on the beat, until a lamp reveals the one thing a machine can't build.",
+    "type": "Spec film",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/room-that-assembles/room_final_16x9.mp4",
+    "alt": "The Room That Assembles, self-directed work"
+  },
+  {
+    "id": "boomerock",
+    "name": "Boomerock",
+    "description": "A looping 3D ad for a fictional slingshot: one shot sets off a backyard chain reaction and the rock comes back.",
+    "type": "3D product ad",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/upwork-portfolio-refresh-20261115/boomerock_v3_upwork_20s.mp4",
+    "alt": "Boomerock, self-directed work"
+  },
+  {
+    "id": "blender-melt",
+    "name": "Inflate, squish, melt",
+    "description": "A Blender product film: a soft book compresses, a vest inflates, a ribbed candle melts.",
+    "type": "3D product animation",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/blender-product-animation/blender-product-motion-v005-full-vest.mp4",
+    "alt": "Inflate, squish, melt, self-directed work"
+  },
+  {
+    "id": "showreel",
+    "name": "Showreel",
+    "description": "Thirty seconds of recent work cut to an original track.",
+    "type": "Showreel",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/upwork-portfolio-refresh-20261115/showreel_nov2026_9x16.mp4",
+    "alt": "Showreel, self-directed work"
   }
 ]

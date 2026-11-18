@@ -32,13 +32,6 @@
     "poster": "media/skincare-poster.jpg",
     "duration": 8.0
   },
-  "soccer": {
-    "file": null,
-    "width": 720,
-    "height": 1280,
-    "poster": "media/soccer-poster.jpg",
-    "duration": 15.0
-  },
   "emberlea": {
     "file": null,
     "width": 720,
@@ -80,5 +73,33 @@
     "height": 1920,
     "poster": "media/night-run-poster.jpg",
     "duration": 5.875
+  },
+  "room-that-assembles": {
+    "file": null,
+    "width": 1920,
+    "height": 1080,
+    "poster": "media/room-that-assembles-poster.jpg",
+    "duration": 30.0
+  },
+  "boomerock": {
+    "file": null,
+    "width": 1080,
+    "height": 1920,
+    "poster": "media/boomerock-poster.jpg",
+    "duration": 20.0
+  },
+  "blender-melt": {
+    "file": null,
+    "width": 1080,
+    "height": 1920,
+    "poster": "media/blender-melt-poster.jpg",
+    "duration": 16.0
+  },
+  "showreel": {
+    "file": null,
+    "width": 1080,
+    "height": 1920,
+    "poster": "media/showreel-poster.jpg",
+    "duration": 29.583
   }
 }
