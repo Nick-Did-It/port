@@ -112,6 +112,15 @@
     "alt": "Boomerock, self-directed work"
   },
   {
+    "id": "blender-melt",
+    "name": "Inflate, squish, melt",
+    "description": "A Blender product film: a soft book compresses, a life vest fully inflates and deflates, a ribbed candle melts.",
+    "type": "3D product animation",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/blender-product-animation/blender-product-motion-v007.mp4",
+    "alt": "Inflate, squish, melt, self-directed work"
+  },
+  {
     "id": "showreel",
     "name": "Showreel",
     "description": "Thirty seconds of recent work cut to an original track.",

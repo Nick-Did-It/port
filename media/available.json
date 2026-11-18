@@ -81,6 +81,13 @@
     "poster": "media/boomerock-poster.jpg",
     "duration": 20.0
   },
+  "blender-melt": {
+    "file": null,
+    "width": 1080,
+    "height": 1920,
+    "poster": "media/blender-melt-poster.jpg",
+    "duration": 16.0
+  },
   "showreel": {
     "file": null,
     "width": 1080,
