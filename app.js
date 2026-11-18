@@ -201,9 +201,14 @@ let heroResume = () => {};
     place();
   }
   video.muted = true; video.defaultMuted = true; video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
-  heroResume = () => { if (!reduce && video.src && !dlg.open && !document.hidden) video.play().catch(() => {}); };
+  let userWants = !reduce, userPaused = false;
+  heroResume = () => { if (userWants && !userPaused && video.src && !dlg.open && !document.hidden) video.play().catch(() => {}); };
+  const toggle = $('#scene-toggle');
+  const label = () => { toggle.textContent = video.paused ? '▶' : '❚❚'; toggle.setAttribute('aria-label', video.paused ? 'Play the scene' : 'Pause the scene'); };
+  video.addEventListener('play', label); video.addEventListener('pause', label);
+  toggle.onclick = e => { e.stopPropagation(); if (video.paused) { userWants = true; userPaused = false; heroResume(); } else { userPaused = true; video.pause(); } };
   // If the phone blocked autoplay (e.g. Low Power Mode), start on the first touch or scroll.
-  const kick = () => { heroResume(); document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); }); };
+  const kick = () => { userWants = true; heroResume(); document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); }); };
   ['touchstart', 'scroll', 'pointerdown'].forEach(t => addEventListener(t, kick, { passive: true, once: true }));
   portrait.addEventListener('change', pick);
   addEventListener('resize', place);
