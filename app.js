@@ -191,7 +191,7 @@ let heroResume = () => {};
     const next = ph ? 'p' : 'l';
     if (next !== mode) {
       mode = next;
-      const webm = video.canPlayType('video/webm');
+      const webm = false; // MP4 (H.264) plays everywhere; iPhone Safari stalls on some WebM
       video.poster = ph ? (m.phone || m.poster) : m.poster;
       const src = ph ? (webm && m.phoneWebm ? m.phoneWebm : m.phoneLoop) : (webm && m.webm ? m.webm : m.loop);
       if (src) video.src = src; else video.removeAttribute('src');
@@ -200,7 +200,11 @@ let heroResume = () => {};
     }
     place();
   }
+  video.muted = true; video.defaultMuted = true; video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
   heroResume = () => { if (!reduce && video.src && !dlg.open && !document.hidden) video.play().catch(() => {}); };
+  // If the phone blocked autoplay (e.g. Low Power Mode), start on the first touch or scroll.
+  const kick = () => { heroResume(); document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); }); };
+  ['touchstart', 'scroll', 'pointerdown'].forEach(t => addEventListener(t, kick, { passive: true, once: true }));
   portrait.addEventListener('change', pick);
   addEventListener('resize', place);
   fetch('scene/manifest.json').then(r => r.ok ? r.json() : null).then(j => { m = j; pick(); }).catch(() => {});
