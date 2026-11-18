@@ -1,0 +1,96 @@
+[
+  {
+    "id": "amber-candle-film-v002",
+    "name": "Amber candle film (fictional product)",
+    "description": "An 18-second film for a fictional amber-glass candle, including an unlit wax-and-wick view. AI-accelerated product concept, not a real product or client.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/amber-film-18s-v002.mp4",
+    "alt": "Fictional Amber candle: amber glass jar with ivory lid in warm window light",
+    "posterTime": 8
+  },
+  {
+    "id": "opal-lighting-study-v002",
+    "name": "Opal lamp (fictional product)",
+    "description": "A 16-second campaign for a fictional walnut-and-glass lamp. AI-accelerated product concept, not a real product or client.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/opal-campaign-16s-v002.mp4",
+    "alt": "Fictional Opal lamp: frosted glass globe on a walnut base",
+    "posterTime": 14
+  },
+  {
+    "id": "afterhours-headphones-study-v001",
+    "name": "Afterhours headphones (fictional product)",
+    "description": "A 12-second motion study for fictional headphones. AI-accelerated product concept, not a real product or client.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/afterhours-reel-12s-v002.mp4",
+    "alt": "Fictional Afterhours headphones in silver and navy",
+    "posterTime": 10
+  },
+  {
+    "id": "amber-candle-study-v001",
+    "name": "Amber candle (fictional product)",
+    "description": "A vertical poster for a fictional amber-glass candle. AI-accelerated product concept, not a real product or client.",
+    "type": "Product launch",
+    "kind": "image",
+    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/amber-9x16-v002.png",
+    "alt": "Fictional Amber candle in an amber glass jar in warm light"
+  },
+  {
+    "id": "skincare",
+    "name": "Skincare concept",
+    "description": "A vertical product study in light and texture.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/skincare-spec/skincare-spec-v001-1080x1920-fixed.mp4",
+    "alt": "Skincare concept independent spec concept"
+  },
+  {
+    "id": "soccer",
+    "name": "After hours",
+    "description": "A soccer-ball concept set on a rain-soaked night pitch.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/soccer-spec/soccer-spec-polished-v001-1080x1920.mp4",
+    "alt": "After hours independent spec concept"
+  },
+  {
+    "id": "emberlea",
+    "name": "EMBERLEA",
+    "description": "A fictional product carousel cut into a 15-second reel.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/carousel-reel/reel_15s.mp4",
+    "alt": "EMBERLEA independent spec concept"
+  },
+  {
+    "id": "chiral",
+    "name": "Chiral",
+    "description": "A code-built music film with abstract motion.",
+    "type": "Music film",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/upwork-drafts/chiral_v10_upwork.mp4",
+    "alt": "Chiral independent spec concept"
+  },
+  {
+    "id": "soul-scale",
+    "name": "The Soul & The Scale",
+    "description": "A code-built music film moving through light and rain.",
+    "type": "Music film",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/upwork-drafts/soul_scale_v5_upwork.mp4",
+    "alt": "The Soul & The Scale independent spec concept",
+    "posterTime": 108
+  },
+  {
+    "id": "visualizer",
+    "name": "The Soul & The Scale loop",
+    "description": "A vertical music visualizer with a returning sunburst.",
+    "type": "Music film",
+    "kind": "video",
+    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/visualizer-loop/visualizer_loop_30s_9x16_share.mp4",
+    "alt": "The Soul & The Scale loop independent spec concept"
+  }
+]

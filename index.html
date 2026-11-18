@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Independent ad and launch concepts by Nick Goergen.">
+  <title>Portfolio · Nick Goergen</title>
+  <link rel="icon" href="data:,">
+  <link rel="preload" href="media/fonts/eb-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="spec-reel.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#pieces">Skip to the work</a>
+  <div class="hero" aria-hidden="true">
+    <canvas id="geo"></canvas>
+    <video id="scene" muted loop playsinline preload="none" hidden></video>
+  </div>
+  <main class="spec-reel">
+    <header class="intro">
+      <p class="byline">Nick Goergen <span aria-hidden="true">·</span> <a href="https://nickdidit.net/">nickdidit.net</a></p>
+      <p class="eyebrow">Independent concepts</p>
+      <h1>Portfolio</h1>
+      <p class="lead">I make 15-second video ads and short launch clips for local businesses and small apps. One 15-second ad is $150. Videos play with sound.</p>
+      <a class="contact" href="mailto:NickOnLocation@proton.me">Contact Nick <span aria-hidden="true">↗</span></a>
+    </header>
+    <section aria-labelledby="work-heading" id="pieces" tabindex="-1">
+      <div class="collection-heading">
+        <h2 id="work-heading">The pieces</h2>
+        <p id="piece-count" class="small"></p>
+      </div>
+      <p id="load-status" class="small" role="status">Loading the work…</p>
+      <div id="piece-grid" class="piece-grid"></div>
+      <noscript><p>Enable JavaScript to view this collection. You can also <a href="mailto:NickOnLocation@proton.me">contact Nick</a> for samples.</p></noscript>
+    </section>
+  </main>
+</body>
+</html>

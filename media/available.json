@@ -1,0 +1,70 @@
+{
+  "amber-candle-film-v002": {
+    "file": "media/amber-candle-film-v002.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/amber-candle-film-v002-poster.jpg",
+    "duration": 18.0
+  },
+  "opal-lighting-study-v002": {
+    "file": "media/opal-lighting-study-v002.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/opal-lighting-study-v002-poster.jpg",
+    "duration": 16.0
+  },
+  "afterhours-headphones-study-v001": {
+    "file": "media/afterhours-headphones-study-v001.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/afterhours-headphones-study-v001-poster.jpg",
+    "duration": 12.0
+  },
+  "amber-candle-study-v001": {
+    "file": "media/amber-candle-study-v001.webp",
+    "width": 1080,
+    "height": 1920
+  },
+  "skincare": {
+    "file": "media/skincare.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/skincare-poster.jpg",
+    "duration": 8.0
+  },
+  "soccer": {
+    "file": "media/soccer.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/soccer-poster.jpg",
+    "duration": 15.0
+  },
+  "emberlea": {
+    "file": "media/emberlea.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/emberlea-poster.jpg",
+    "duration": 15.0
+  },
+  "chiral": {
+    "file": "media/chiral.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/chiral-poster.jpg",
+    "duration": 200.208333
+  },
+  "soul-scale": {
+    "file": "media/soul-scale.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/soul-scale-poster.jpg",
+    "duration": 180.0
+  },
+  "visualizer": {
+    "file": "media/visualizer.mp4",
+    "width": 720,
+    "height": 1280,
+    "poster": "media/visualizer-poster.jpg",
+    "duration": 30.0
+  }
+}
