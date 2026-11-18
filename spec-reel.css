@@ -87,3 +87,5 @@ a:hover{text-decoration-thickness:2px}
 .v-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .v-thumb:hover,.v-thumb[aria-current=true]{opacity:1;border-color:#F2C14E}
 @media(max-width:700px){.v-media video,.v-media img{max-height:calc(100dvh - 190px)}.viewer-body{grid-template-columns:1fr}.v-nav{display:none}.v-caption p:not(.v-tag){display:none}}
+.v-media .v-vimeo{border:0;display:block;height:auto;width:min(calc(100vw - 160px),calc((100dvh - 250px) * var(--r,.5625)));border-radius:4px;box-shadow:0 30px 80px #000a}
+@media(max-width:700px){.v-media .v-vimeo{width:min(100vw,calc((100dvh - 190px) * var(--r,.5625)))}}

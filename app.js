@@ -8,6 +8,7 @@ const TV = { x: 0.724, y: 0.52, w: 0.205, h: 0.245 };
 const $ = s => document.querySelector(s);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
 let works = [];
+let vimeo = {};
 let current = 0;
 
 // ---------- grid ----------
@@ -36,7 +37,15 @@ function show(i) {
   const box = $('#v-media');
   box.querySelectorAll('video').forEach(v => v.pause());
   let m;
-  if (w.piece.kind === 'video') {
+  if (w.piece.kind === 'video' && vimeo[w.piece.id]) {
+    const u = new URL(vimeo[w.piece.id]);
+    for (const [k, v] of Object.entries({ autoplay: 1, title: 0, byline: 0, portrait: 0, dnt: 1, color: 'E0702A' })) u.searchParams.set(k, v);
+    m = el('iframe', 'v-vimeo');
+    Object.assign(m, { src: u, allow: 'autoplay; fullscreen; picture-in-picture', title: w.piece.name });
+    m.allowFullscreen = true;
+    m.style.aspectRatio = `${w.asset.width} / ${w.asset.height}`;
+    m.style.setProperty('--r', w.asset.width / w.asset.height);
+  } else if (w.piece.kind === 'video') {
     m = el('video');
     Object.assign(m, { src: w.asset.file, poster: w.asset.poster || '', controls: true, playsInline: true, autoplay: true });
     m.addEventListener('ended', () => show(current + 1));
@@ -86,7 +95,8 @@ $('#tv').onclick = () => openViewer(0);
 async function load() {
   const status = $('#load-status');
   try {
-    const [p, a] = await Promise.all([fetch('pieces.json'), fetch('media/available.json')]);
+    const [p, a, v] = await Promise.all([fetch('pieces.json'), fetch('media/available.json'), fetch('vimeo.json').catch(() => null)]);
+    if (v && v.ok) vimeo = await v.json();
     if (!p.ok || !a.ok) throw new Error('Missing collection data');
     const pieces = await p.json(), assets = await a.json();
     const rank = id => { const r = ORDER.indexOf(id); return r < 0 ? 999 : r; };
