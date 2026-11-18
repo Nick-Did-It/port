@@ -1,6 +1,6 @@
 'use strict';
 // Best first; anything not listed follows in pieces.json order.
-const ORDER = ['chiral', 'soul-scale', 'emberlea', 'amber-candle-film-v002', 'visualizer',
+const ORDER = ['chiral', 'soul-scale', 'emberlea', 'amber-candle-film-v002', 'morning-grind', 'night-run', 'visualizer',
   'skincare', 'soccer', 'opal-lighting-study-v002', 'afterhours-headphones-study-v001', 'amber-candle-study-v001'];
 // TV body in the 1920x1080 scene frame, as fractions.
 const TV = { x: 0.724, y: 0.52, w: 0.205, h: 0.245 };

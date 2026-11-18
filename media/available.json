@@ -66,5 +66,19 @@
     "height": 1280,
     "poster": "media/visualizer-poster.jpg",
     "duration": 30.0
+  },
+  "morning-grind": {
+    "file": null,
+    "width": 1080,
+    "height": 1920,
+    "poster": "media/morning-grind-poster.jpg",
+    "duration": 7.042
+  },
+  "night-run": {
+    "file": null,
+    "width": 1080,
+    "height": 1920,
+    "poster": "media/night-run-poster.jpg",
+    "duration": 5.875
   }
 }

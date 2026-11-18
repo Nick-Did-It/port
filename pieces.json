@@ -92,5 +92,23 @@
     "kind": "video",
     "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/visualizer-loop/visualizer_loop_30s_9x16_share.mp4",
     "alt": "The Soul & The Scale loop independent spec concept"
+  },
+  {
+    "id": "morning-grind",
+    "name": "Morning grind",
+    "description": "A hand-ground espresso, from scale to window light.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/higgsfield-portfolio-practice-20261117/exports/espresso-grind-prep-v003-music.mp4",
+    "alt": "Morning grind independent spec concept"
+  },
+  {
+    "id": "night-run",
+    "name": "Night run",
+    "description": "A running shoe laced up on a wet track at night.",
+    "type": "Product launch",
+    "kind": "video",
+    "source": "~/Bhalu-Video/higgsfield-portfolio-practice-20261117/exports/running-shoe-three-shot-v003-music.mp4",
+    "alt": "Night run independent spec concept"
   }
 ]
