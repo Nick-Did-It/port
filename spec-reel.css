@@ -86,3 +86,4 @@ a:hover{text-decoration-thickness:2px}
 .cta.loading::after{content:'';width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .retry{margin-top:12px}
+.links{display:flex;flex-wrap:wrap;gap:4px 28px;margin-top:14px}
