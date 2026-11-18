@@ -1,144 +1,160 @@
 'use strict';
+// Best first; anything not listed follows in pieces.json order.
+const ORDER = ['chiral', 'soul-scale', 'emberlea', 'amber-candle-film-v002', 'visualizer',
+  'skincare', 'soccer', 'opal-lighting-study-v002', 'afterhours-headphones-study-v001', 'amber-candle-study-v001'];
+// TV body in the 1920x1080 scene frame, as fractions.
+const TV = { x: 0.724, y: 0.52, w: 0.205, h: 0.245 };
 
-const grid = document.querySelector('#piece-grid');
-const status = document.querySelector('#load-status');
-const count = document.querySelector('#piece-count');
+const $ = s => document.querySelector(s);
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+let works = [];
+let current = 0;
 
-function element(tag, className, text) {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (text) node.textContent = text;
-  return node;
+// ---------- grid ----------
+function tile(w, i) {
+  const art = el('article', 'piece');
+  if (w.asset.width > w.asset.height) art.classList.add('wide');
+  const btn = el('button', 'piece-media');
+  btn.type = 'button';
+  btn.setAttribute('aria-label', `Watch ${w.piece.name}`);
+  const img = el('img');
+  Object.assign(img, { src: w.asset.poster || w.asset.file, alt: w.piece.alt || '', loading: 'lazy', decoding: 'async', width: w.asset.width, height: w.asset.height });
+  btn.append(img);
+  if (w.piece.kind === 'video') btn.append(el('span', 'play-label'));
+  btn.addEventListener('click', () => openViewer(i));
+  const meta = el('div', 'piece-meta');
+  meta.append(el('span', 'tag', w.piece.type), el('span', 'format', w.piece.kind === 'video' ? 'Video' : 'Still'));
+  art.append(btn, meta, el('h3', '', w.piece.name), el('p', 'description', w.piece.description));
+  return art;
 }
 
-function tile(piece, asset) {
-  const article = element('article', 'piece');
-  if (asset.width > asset.height) article.classList.add('wide');
-  article.id = piece.id;
-  const media = element('div', 'piece-media');
-  const image = element('img');
-  image.src = asset.poster || asset.file;
-  image.alt = piece.alt;
-  image.loading = 'lazy';
-  image.decoding = 'async';
-  image.width = asset.width;
-  image.height = asset.height;
-  image.addEventListener('error', () => {
-    media.replaceChildren(element('p', 'media-error', 'This preview is unavailable.'));
-  });
-
-  if (piece.kind === 'video') {
-    const play = element('button', 'play');
-    play.type = 'button';
-    play.setAttribute('aria-label', `Play ${piece.name} video`);
-    const label = element('span', 'play-label', '▷ Play video');
-    label.setAttribute('aria-hidden', 'true');
-    play.append(image, label);
-    media.append(play);
-    play.addEventListener('click', async () => {
-      document.querySelectorAll('video').forEach(other => other.pause());
-      const video = element('video');
-      video.controls = true;
-      video.muted = false;
-      video.defaultMuted = true;
-      video.playsInline = true;
-      video.preload = 'none';
-      video.poster = asset.poster;
-      video.src = asset.file;
-      video.tabIndex = 0;
-      video.setAttribute('aria-label', `${piece.name} spec video`);
-      video.addEventListener('play', () => {
-        document.querySelectorAll('video').forEach(other => {
-          if (other !== video) other.pause();
-        });
-      });
-      video.addEventListener('error', () => {
-        media.replaceChildren(element('p', 'media-error', 'This video is unavailable. Please reload to try again.'));
-      });
-      media.replaceChildren(video);
-      video.focus({ preventScroll: true });
-      try { await video.play(); } catch {
-        // Native controls remain available if the browser declines playback.
-      }
-    }, { once: true });
+// ---------- viewer ----------
+const dlg = $('#viewer');
+function show(i) {
+  current = (i + works.length) % works.length;
+  const w = works[current];
+  const box = $('#v-media');
+  box.querySelectorAll('video').forEach(v => v.pause());
+  let m;
+  if (w.piece.kind === 'video') {
+    m = el('video');
+    Object.assign(m, { src: w.asset.file, poster: w.asset.poster || '', controls: true, playsInline: true, autoplay: true });
+    m.addEventListener('ended', () => show(current + 1));
   } else {
-    media.append(image);
+    m = el('img');
+    Object.assign(m, { src: w.asset.file, alt: w.piece.alt || '' });
   }
-
-  const meta = element('div', 'piece-meta');
-  meta.append(element('span', 'tag', piece.type), element('span', 'format', piece.kind === 'video' ? 'Video' : 'Still'));
-  const heading = element('h3', '', piece.name);
-  const description = element('p', 'description', piece.description);
-  const attribution = element('p', 'attribution', 'Spec concept by Nick Goergen · not affiliated');
-  article.append(media, meta, heading, description, attribution);
-  return article;
+  box.replaceChildren(m);
+  $('#v-count').textContent = `${current + 1} / ${works.length}`;
+  $('#v-tag').textContent = w.piece.type || '';
+  $('#v-title').textContent = w.piece.name;
+  $('#v-desc').textContent = w.piece.description || '';
+  [...$('#v-strip').children].forEach((t, k) => t.setAttribute('aria-current', k === current ? 'true' : 'false'));
+  $('#v-strip').children[current]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
 }
+function openViewer(i = 0) {
+  if (!works.length) return;
+  $('#scene').pause();
+  dlg.showModal();
+  show(i);
+}
+function closeViewer() {
+  dlg.querySelectorAll('video').forEach(v => v.pause());
+  $('#v-media').replaceChildren();
+  if (dlg.open) dlg.close();
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) $('#scene').play().catch(() => {});
+}
+$('#v-close').onclick = closeViewer;
+$('#v-prev').onclick = () => show(current - 1);
+$('#v-next').onclick = () => show(current + 1);
+dlg.addEventListener('close', closeViewer);
+dlg.addEventListener('keydown', e => {
+  if (e.target.tagName === 'VIDEO' && (e.key === ' ')) return;
+  if (e.key === 'ArrowRight') show(current + 1);
+  if (e.key === 'ArrowLeft') show(current - 1);
+});
+let touchX = null;
+$('#v-media').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+$('#v-media').addEventListener('touchend', e => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX; touchX = null;
+  if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+});
+$('#open-viewer').onclick = () => openViewer(0);
+$('#tv').onclick = () => openViewer(0);
 
-async function loadPieces() {
+async function load() {
+  const status = $('#load-status');
   try {
-    const [piecesResponse, assetsResponse] = await Promise.all([
-      fetch('pieces.json'), fetch('media/available.json')
-    ]);
-    if (!piecesResponse.ok || !assetsResponse.ok) throw new Error('Missing collection data');
-    const pieces = await piecesResponse.json();
-    const assets = await assetsResponse.json();
-    const ready = pieces.filter(piece => assets[piece.id]);
-    grid.replaceChildren(...ready.map(piece => tile(piece, assets[piece.id])));
-    count.textContent = `${ready.length} ${ready.length === 1 ? 'piece' : 'pieces'}`;
-    status.hidden = ready.length > 0;
-    status.textContent = 'The collection is being prepared. Contact Nick for samples.';
-  } catch (error) {
+    const [p, a] = await Promise.all([fetch('pieces.json'), fetch('media/available.json')]);
+    if (!p.ok || !a.ok) throw new Error('Missing collection data');
+    const pieces = await p.json(), assets = await a.json();
+    const rank = id => { const r = ORDER.indexOf(id); return r < 0 ? 999 : r; };
+    works = pieces.filter(x => assets[x.id]).map(x => ({ piece: x, asset: assets[x.id] }))
+      .sort((m, n) => rank(m.piece.id) - rank(n.piece.id));
+    $('#piece-grid').replaceChildren(...works.map(tile));
+    $('#piece-count').textContent = `${works.length} pieces`;
+    $('#v-strip').replaceChildren(...works.map((w, i) => {
+      const t = el('button', 'v-thumb'); t.type = 'button'; t.setAttribute('role', 'listitem');
+      t.setAttribute('aria-label', w.piece.name);
+      const im = el('img'); im.src = w.asset.poster || w.asset.file; im.alt = ''; im.loading = 'lazy';
+      t.append(im); t.onclick = () => show(i); return t;
+    }));
+    status.hidden = works.length > 0;
+    const hash = location.hash.slice(1);
+    const at = works.findIndex(w => w.piece.id === hash);
+    if (at >= 0) openViewer(at);
+  } catch (err) {
     status.hidden = false;
     status.textContent = 'The collection could not load. Please try again, or contact Nick for samples.';
-    console.error(error);
+    console.error(err);
   }
 }
-
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) document.querySelectorAll('video').forEach(video => video.pause());
+  if (document.hidden) document.querySelectorAll('video').forEach(v => v.pause());
 });
-loadPieces();
+load();
 
-// Hero: the garden scene loop when it exists, moving warm geometry until then.
+// ---------- hero: garden scene loop, or moving geometry until it exists ----------
 (function hero() {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const video = document.querySelector('#scene');
-  const canvas = document.querySelector('#geo');
-  const narrow = matchMedia('(max-aspect-ratio: 1/1)').matches;
+  const stage = $('#stage'), video = $('#scene'), canvas = $('#geo'), tv = $('#tv');
+  const narrow = () => matchMedia('(max-aspect-ratio: 1/1)').matches;
+  // Keep the TV hotspot glued to the TV however object-fit:cover crops the frame.
+  function place() {
+    if (video.hidden || narrow()) { tv.hidden = true; return; }
+    const W = stage.clientWidth, H = stage.clientHeight, s = Math.max(W / 1920, H / 1080);
+    const fx = parseFloat(getComputedStyle(video).objectPosition) / 100 || 0.5;
+    const ox = (W - 1920 * s) * fx, oy = (H - 1080 * s) * 0.5;
+    Object.assign(tv.style, { left: ox + TV.x * 1920 * s + 'px', top: oy + TV.y * 1080 * s + 'px', width: TV.w * 1920 * s + 'px', height: TV.h * 1080 * s + 'px' });
+    tv.hidden = false;
+  }
+  addEventListener('resize', place);
   fetch('scene/manifest.json').then(r => r.ok ? r.json() : null).then(m => {
     if (!m) return;
-    video.poster = narrow && m.phone ? m.phone : m.poster;
-    video.hidden = false; canvas.hidden = true;
-    if (narrow) return; // phones get the portrait still; the loop is landscape
-    if (m.webm && video.canPlayType('video/webm')) video.src = m.webm; else video.src = m.loop;
+    video.poster = narrow() && m.phone ? m.phone : m.poster;
+    video.hidden = false; canvas.hidden = true; place();
+    if (narrow()) return;
+    video.src = m.webm && video.canPlayType('video/webm') ? m.webm : m.loop;
     if (!reduce) video.play().catch(() => {});
   }).catch(() => {});
 
   const ctx = canvas.getContext('2d');
   const colors = ['#E0702A', '#F2B33D', '#C2452D', '#7A8B3A', '#8C5A9E', '#F4D58D'];
-  const shapes = Array.from({ length: 14 }, (_, i) => ({
-    sides: [3, 4, 6, 0][i % 4], c: colors[i % colors.length],
-    x: Math.random(), y: Math.random(), r: 0.06 + Math.random() * 0.16,
-    a: Math.random() * 6.28, s: (Math.random() - 0.5) * 0.004,
-    dx: (Math.random() - 0.5) * 0.0006, dy: (Math.random() - 0.5) * 0.0004
-  }));
+  const shapes = Array.from({ length: 14 }, (_, i) => ({ sides: [3, 4, 6, 0][i % 4], c: colors[i % 6], x: Math.random(), y: Math.random(), r: 0.06 + Math.random() * 0.16, a: Math.random() * 6.28, s: (Math.random() - 0.5) * 0.004, dx: (Math.random() - 0.5) * 0.0006, dy: (Math.random() - 0.5) * 0.0004 }));
   function size() { canvas.width = canvas.clientWidth * devicePixelRatio; canvas.height = canvas.clientHeight * devicePixelRatio; }
   function draw() {
-    const w = canvas.width, h = canvas.height, m = Math.max(w, h);
-    ctx.clearRect(0, 0, w, h);
-    ctx.globalCompositeOperation = 'multiply';
+    if (canvas.hidden) return;
+    const w = canvas.width, h = canvas.height, M = Math.max(w, h);
+    ctx.clearRect(0, 0, w, h); ctx.globalCompositeOperation = 'multiply';
     for (const p of shapes) {
-      ctx.beginPath();
-      const R = p.r * m;
+      ctx.beginPath(); const R = p.r * M;
       if (!p.sides) ctx.arc(p.x * w, p.y * h, R, 0, 6.29);
-      else for (let k = 0; k <= p.sides; k++) {
-        const t = p.a + k * 6.2832 / p.sides;
-        ctx[k ? 'lineTo' : 'moveTo'](p.x * w + R * Math.cos(t), p.y * h + R * Math.sin(t));
-      }
+      else for (let k = 0; k <= p.sides; k++) { const t = p.a + k * 6.2832 / p.sides; ctx[k ? 'lineTo' : 'moveTo'](p.x * w + R * Math.cos(t), p.y * h + R * Math.sin(t)); }
       ctx.fillStyle = p.c + 'B0'; ctx.fill();
       p.a += p.s; p.x = (p.x + p.dx + 1.2) % 1.2 - 0.1; p.y = (p.y + p.dy + 1.2) % 1.2 - 0.1;
     }
-    if (!reduce && !canvas.hidden) requestAnimationFrame(draw);
+    if (!reduce) requestAnimationFrame(draw);
   }
   size(); addEventListener('resize', size); draw();
 })();

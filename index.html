@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Independent ad and launch concepts by Nick Goergen.">
+  <meta name="description" content="Music films, spec ads and launch clips by Nick Goergen.">
   <title>Portfolio · Nick Goergen</title>
   <link rel="icon" href="data:,">
   <link rel="preload" href="media/fonts/eb-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -12,18 +12,24 @@
 </head>
 <body>
   <a class="skip" href="#pieces">Skip to the work</a>
-  <div class="hero" aria-hidden="true">
-    <canvas id="geo"></canvas>
-    <video id="scene" muted loop playsinline preload="none" hidden></video>
-  </div>
-  <main class="spec-reel">
-    <header class="intro">
+  <header class="hero">
+    <div class="stage" id="stage">
+      <canvas id="geo" aria-hidden="true"></canvas>
+      <video id="scene" muted loop playsinline preload="none" hidden aria-hidden="true"></video>
+      <button id="tv" class="tv-hotspot" type="button" aria-label="Open the viewer and watch the work"><span>Watch</span></button>
+    </div>
+    <div class="hero-copy">
       <p class="byline">Nick Goergen <span aria-hidden="true">·</span> <a href="https://nickdidit.net/">nickdidit.net</a></p>
-      <p class="eyebrow">Independent concepts</p>
       <h1>Portfolio</h1>
+      <button id="open-viewer" class="cta" type="button">Watch the work <span aria-hidden="true">▶</span></button>
+    </div>
+  </header>
+  <main class="spec-reel">
+    <section class="intro">
+      <p class="eyebrow">Independent concepts</p>
       <p class="lead">I make 15-second video ads and short launch clips for local businesses and small apps. One 15-second ad is $150. Videos play with sound.</p>
       <a class="contact" href="mailto:NickOnLocation@proton.me">Contact Nick <span aria-hidden="true">↗</span></a>
-    </header>
+    </section>
     <section aria-labelledby="work-heading" id="pieces" tabindex="-1">
       <div class="collection-heading">
         <h2 id="work-heading">The pieces</h2>
@@ -34,5 +40,23 @@
       <noscript><p>Enable JavaScript to view this collection. You can also <a href="mailto:NickOnLocation@proton.me">contact Nick</a> for samples.</p></noscript>
     </section>
   </main>
+
+  <dialog id="viewer" class="viewer" aria-label="Viewer">
+    <div class="viewer-top">
+      <p class="viewer-count" id="v-count"></p>
+      <button class="v-close" id="v-close" type="button" aria-label="Close viewer">✕</button>
+    </div>
+    <div class="viewer-body">
+      <button class="v-nav" id="v-prev" type="button" aria-label="Previous piece">‹</button>
+      <div class="v-media" id="v-media"></div>
+      <button class="v-nav" id="v-next" type="button" aria-label="Next piece">›</button>
+    </div>
+    <div class="v-caption">
+      <p class="v-tag" id="v-tag"></p>
+      <h2 id="v-title"></h2>
+      <p id="v-desc"></p>
+    </div>
+    <div class="v-strip" id="v-strip" role="list"></div>
+  </dialog>
 </body>
 </html>
