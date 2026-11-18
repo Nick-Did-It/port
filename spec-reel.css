@@ -9,8 +9,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--display);font-size:1.2rem;line-height:1.6;-webkit-font-smoothing:antialiased}
 [hidden]{display:none!important}
-a{color:var(--ember);text-underline-offset:4px;text-decoration-thickness:1px}
-a:hover{text-decoration-thickness:2px}
+a{color:var(--ember);text-decoration:none}
 :focus-visible{outline:2px solid var(--amber);outline-offset:5px;border-radius:3px}
 .skip{position:absolute;top:-5rem;left:18px;padding:10px 16px;background:var(--ink);color:var(--ground);z-index:10}
 .skip:focus{top:10px}
@@ -38,7 +37,7 @@ a:hover{text-decoration-thickness:2px}
 .byline a{text-decoration:none}
 .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin:0 0 6px}
 .lead{font-size:clamp(1.25rem,1.1rem + .6vw,1.5rem);line-height:1.5;max-width:36rem}
-.contact{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-size:1.1rem;font-weight:700;margin-top:10px}
+
 
 .collection-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:20px}
 .spec-reel h2{font-size:2.2rem}
@@ -86,7 +85,13 @@ a:hover{text-decoration-thickness:2px}
 .cta.loading::after{content:'';width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .retry{margin-top:12px}
-.links{display:flex;flex-wrap:wrap;gap:4px 28px;margin-top:14px}
-.scene-toggle{position:absolute;right:14px;bottom:calc(18% + 10px);z-index:3;width:38px;height:38px;border:0;border-radius:50%;background:#2A1A12AA;color:#FFF4E6;font-size:.8rem;cursor:pointer;backdrop-filter:blur(4px)}
-.scene-toggle:hover{background:#C8501F}
+
 @media(max-aspect-ratio:1/1){.hero h1{font-size:clamp(2.8rem,12vw,4rem)}.hero-copy{top:max(14px,2.5vh)}}
+.spec-reel .links{display:flex;flex-wrap:wrap;gap:2px 6px;margin:18px 0 0 -12px}
+.contact{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border-radius:999px;font-size:1.1rem;font-weight:600;color:var(--ink);text-decoration:none;transition:background .25s,color .25s}
+.contact span{color:var(--ember);transition:transform .25s}
+.contact:hover,.contact:focus-visible{background:#C8501F14;color:var(--ember)}
+.contact:hover span{transform:translate(2px,-2px)}
+.contact:active{background:#C8501F26}
+.byline a{border-radius:6px;padding:2px 4px;margin:-2px -4px;transition:background .25s}
+.byline a:hover{background:#C8501F14}

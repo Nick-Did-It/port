@@ -201,12 +201,8 @@ let heroResume = () => {};
     place();
   }
   video.muted = true; video.defaultMuted = true; video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
-  let userWants = !reduce, userPaused = false;
+  let userWants = true, userPaused = false; // Nick: the garden plays for everyone
   heroResume = () => { if (userWants && !userPaused && video.src && !dlg.open && !document.hidden) video.play().catch(() => {}); };
-  const toggle = $('#scene-toggle');
-  const label = () => { toggle.textContent = video.paused ? '▶' : '❚❚'; toggle.setAttribute('aria-label', video.paused ? 'Play the scene' : 'Pause the scene'); };
-  video.addEventListener('play', label); video.addEventListener('pause', label);
-  toggle.onclick = e => { e.stopPropagation(); if (video.paused) { userWants = true; userPaused = false; heroResume(); } else { userPaused = true; video.pause(); } };
   // If the phone blocked autoplay (e.g. Low Power Mode), start on the first touch or scroll.
   const kick = () => { userWants = true; heroResume(); document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); }); };
   ['touchstart', 'scroll', 'pointerdown'].forEach(t => addEventListener(t, kick, { passive: true, once: true }));
