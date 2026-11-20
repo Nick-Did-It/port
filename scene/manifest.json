@@ -1,3 +1,20 @@
-{"loop":"scene/loop.mp4","webm":"scene/loop.webm","poster":"scene/poster.jpg",
- "phoneLoop":"scene/loop-phone.mp4","phoneWebm":"scene/loop-phone.webm","phone":"scene/poster-phone.jpg",
- "tv":[0.7144,0.4958,0.9374,0.7626],"phoneTv":[0.4831,0.4519,0.9200,0.6212]}
+{
+  "loop": "scene/loop.mp4",
+  "webm": "scene/loop.webm",
+  "poster": "scene/poster.jpg",
+  "phoneLoop": "scene/loop-phone.mp4",
+  "phoneWebm": "scene/loop-phone.webm",
+  "phone": "scene/poster-phone.jpg",
+  "tv": [
+    0.7144,
+    0.4958,
+    0.9374,
+    0.7626
+  ],
+  "phoneTv": [
+    0.4831,
+    0.4519,
+    0.92,
+    0.6212
+  ]
+}

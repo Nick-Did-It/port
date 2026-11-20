@@ -1,98 +1,119 @@
 {
   "amber-candle-film-v002": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 18.0,
+    "file": null,
     "poster": "media/amber-candle-film-v002-poster.jpg",
-    "duration": 18.0
+    "preview": "previews/amber-candle-film-v002.mp4"
   },
   "opal-lighting-study-v002": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 16.0,
+    "file": null,
     "poster": "media/opal-lighting-study-v002-poster.jpg",
-    "duration": 16.0
+    "preview": "previews/opal-lighting-study-v002.mp4"
   },
   "afterhours-headphones-study-v001": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 12.0,
+    "file": null,
     "poster": "media/afterhours-headphones-study-v001-poster.jpg",
-    "duration": 12.0
+    "preview": "previews/afterhours-headphones-study-v001.mp4"
   },
   "amber-candle-study-v001": {
-    "file": "media/amber-candle-study-v001.webp",
     "width": 1080,
-    "height": 1920
+    "height": 1920,
+    "file": "media/amber-candle-study-v001.webp"
   },
   "emberlea": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 15.0,
+    "file": null,
     "poster": "media/emberlea-poster.jpg",
-    "duration": 15.0
+    "preview": "previews/emberlea.mp4"
+  },
+  "eros-and-erotica": {
+    "width": 720,
+    "height": 1280,
+    "duration": 30.0,
+    "file": "media/eros-and-erotica.mp4",
+    "poster": "media/eros-and-erotica-poster.jpg",
+    "preview": "previews/eros-and-erotica.mp4"
   },
   "chiral": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 30.0,
+    "file": "media/chiral.mp4",
     "poster": "media/chiral-poster.jpg",
-    "duration": 200.208333
+    "preview": "previews/chiral.mp4"
   },
   "soul-scale": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 30.0,
+    "file": "media/soul-scale.mp4",
     "poster": "media/soul-scale-poster.jpg",
-    "duration": 180.0
+    "preview": "previews/soul-scale.mp4"
   },
   "visualizer": {
-    "file": null,
     "width": 720,
     "height": 1280,
+    "duration": 30.0,
+    "file": "media/visualizer.mp4",
     "poster": "media/visualizer-poster.jpg",
-    "duration": 30.0
+    "preview": "previews/visualizer.mp4"
   },
   "morning-grind": {
+    "width": 720,
+    "height": 1280,
+    "duration": 7.041667,
     "file": null,
-    "width": 1080,
-    "height": 1920,
     "poster": "media/morning-grind-poster.jpg",
-    "duration": 7.042
+    "preview": "previews/morning-grind.mp4"
   },
   "night-run": {
+    "width": 720,
+    "height": 1280,
+    "duration": 5.875,
     "file": null,
-    "width": 1080,
-    "height": 1920,
     "poster": "media/night-run-poster.jpg",
-    "duration": 5.875
+    "preview": "previews/night-run.mp4"
   },
   "room-that-assembles": {
+    "width": 1280,
+    "height": 720,
+    "duration": 30.0,
     "file": null,
-    "width": 1920,
-    "height": 1080,
     "poster": "media/room-that-assembles-poster.jpg",
-    "duration": 30.0
+    "preview": "previews/room-that-assembles.mp4"
   },
   "boomerock": {
+    "width": 720,
+    "height": 1280,
+    "duration": 20.0,
     "file": null,
-    "width": 1080,
-    "height": 1920,
     "poster": "media/boomerock-poster.jpg",
-    "duration": 20.0
+    "preview": "previews/boomerock.mp4"
   },
   "blender-melt": {
+    "width": 720,
+    "height": 1280,
+    "duration": 16.0,
     "file": null,
-    "width": 1080,
-    "height": 1920,
     "poster": "media/blender-melt-poster.jpg",
-    "duration": 16.0
+    "preview": "previews/blender-melt.mp4"
   },
   "showreel": {
+    "width": 720,
+    "height": 1280,
+    "duration": 29.583333,
     "file": null,
-    "width": 1080,
-    "height": 1920,
     "poster": "media/showreel-poster.jpg",
-    "duration": 29.583
+    "preview": "previews/showreel.mp4"
   }
 }

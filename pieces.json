@@ -5,9 +5,7 @@
     "description": "An 18-second film for a fictional amber-glass candle, including an unlit wax-and-wick view. AI-accelerated product concept, not a real product or client.",
     "type": "Product launch",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/amber-film-18s-v002.mp4",
-    "alt": "Fictional Amber candle: amber glass jar with ivory lid in warm window light",
-    "posterTime": 8
+    "alt": "Fictional Amber candle: amber glass jar with ivory lid in warm window light"
   },
   {
     "id": "opal-lighting-study-v002",
@@ -15,9 +13,7 @@
     "description": "A 16-second campaign for a fictional walnut-and-glass lamp. AI-accelerated product concept, not a real product or client.",
     "type": "Product launch",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/opal-campaign-16s-v002.mp4",
-    "alt": "Fictional Opal lamp: frosted glass globe on a walnut base",
-    "posterTime": 14
+    "alt": "Fictional Opal lamp: frosted glass globe on a walnut base"
   },
   {
     "id": "afterhours-headphones-study-v001",
@@ -25,9 +21,7 @@
     "description": "A 12-second motion study for fictional headphones. AI-accelerated product concept, not a real product or client.",
     "type": "Product launch",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/afterhours-reel-12s-v002.mp4",
-    "alt": "Fictional Afterhours headphones in silver and navy",
-    "posterTime": 10
+    "alt": "Fictional Afterhours headphones in silver and navy"
   },
   {
     "id": "amber-candle-study-v001",
@@ -35,7 +29,6 @@
     "description": "A vertical poster for a fictional amber-glass candle. AI-accelerated product concept, not a real product or client.",
     "type": "Product launch",
     "kind": "image",
-    "source": "~/Bhalu-Video/delivery/higgsfield-stills-spec-ads-20261116/amber-9x16-v002.png",
     "alt": "Fictional Amber candle in an amber glass jar in warm light"
   },
   {
@@ -44,8 +37,15 @@
     "description": "A fictional product carousel cut into a 15-second reel.",
     "type": "Product launch",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/carousel-reel/reel_15s.mp4",
     "alt": "EMBERLEA independent spec concept"
+  },
+  {
+    "id": "eros-and-erotica",
+    "name": "Eros & Erotica",
+    "description": "A code-built music film: two figures drawn in light over moving ground.",
+    "type": "Music film",
+    "kind": "video",
+    "alt": "Eros & Erotica music film by Hi I'm Nick"
   },
   {
     "id": "chiral",
@@ -53,7 +53,6 @@
     "description": "A code-built music film with abstract motion.",
     "type": "Music film",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/upwork-drafts/chiral_v10_upwork.mp4",
     "alt": "Chiral independent spec concept"
   },
   {
@@ -62,9 +61,7 @@
     "description": "A code-built music film moving through light and rain.",
     "type": "Music film",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/upwork-drafts/soul_scale_v5_upwork.mp4",
-    "alt": "The Soul & The Scale independent spec concept",
-    "posterTime": 108
+    "alt": "The Soul & The Scale independent spec concept"
   },
   {
     "id": "visualizer",
@@ -72,7 +69,6 @@
     "description": "A vertical music visualizer with a returning sunburst.",
     "type": "Music film",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/upwork-spec-samples-20261115/visualizer-loop/visualizer_loop_30s_9x16_share.mp4",
     "alt": "The Soul & The Scale loop independent spec concept"
   },
   {
@@ -81,7 +77,6 @@
     "description": "A hand-ground espresso, from scale to window light.",
     "type": "Product launch",
     "kind": "video",
-    "source": "~/Bhalu-Video/higgsfield-portfolio-practice-20261117/exports/espresso-grind-prep-v003-music.mp4",
     "alt": "Morning grind independent spec concept"
   },
   {
@@ -90,7 +85,6 @@
     "description": "A running shoe laced up on a wet track at night.",
     "type": "Product launch",
     "kind": "video",
-    "source": "~/Bhalu-Video/higgsfield-portfolio-practice-20261117/exports/running-shoe-three-shot-v003-music.mp4",
     "alt": "Night run independent spec concept"
   },
   {
@@ -99,7 +93,6 @@
     "description": "Pieces of a studio drift in as point clouds and click into place on the beat, until a lamp reveals the one thing a machine can't build.",
     "type": "Spec film",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/room-that-assembles/room_final_16x9.mp4",
     "alt": "The Room That Assembles, self-directed work"
   },
   {
@@ -108,7 +101,6 @@
     "description": "A looping 3D ad for a fictional slingshot: one shot sets off a backyard chain reaction and the rock comes back.",
     "type": "3D product ad",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/upwork-portfolio-refresh-20261115/boomerock_v3_upwork_20s.mp4",
     "alt": "Boomerock, self-directed work"
   },
   {
@@ -117,7 +109,6 @@
     "description": "A Blender product film: a soft book compresses, a life vest fully inflates and deflates, a ribbed candle melts.",
     "type": "3D product animation",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/blender-product-animation/blender-product-motion-v007.mp4",
     "alt": "Inflate, squish, melt, self-directed work"
   },
   {
@@ -126,7 +117,6 @@
     "description": "Thirty seconds of recent work cut to an original track.",
     "type": "Showreel",
     "kind": "video",
-    "source": "~/Bhalu-Video/delivery/upwork-portfolio-refresh-20261115/showreel_nov2026_9x16.mp4",
     "alt": "Showreel, self-directed work"
   }
 ]

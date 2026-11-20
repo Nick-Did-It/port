@@ -1,10 +1,7 @@
 'use strict';
 // Best first; anything not listed follows in pieces.json order.
-const ORDER = ['soul-scale', 'room-that-assembles', 'chiral', 'boomerock', 'emberlea', 'amber-candle-film-v002', 'morning-grind', 'night-run', 'blender-melt', 'showreel', 'visualizer',
+const ORDER = ['eros-and-erotica', 'soul-scale', 'chiral', 'room-that-assembles', 'boomerock', 'emberlea', 'amber-candle-film-v002', 'morning-grind', 'night-run', 'blender-melt', 'showreel', 'visualizer',
   'skincare', 'soccer', 'opal-lighting-study-v002', 'afterhours-headphones-study-v001', 'amber-candle-study-v001'];
-// TV body in the 1920x1080 scene frame, as fractions.
-const TV = { x: 0.724, y: 0.52, w: 0.205, h: 0.245 };
-
 const $ = s => document.querySelector(s);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
 let works = [];
@@ -17,7 +14,10 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const seen = new IntersectionObserver(entries => {
   for (const e of entries) {
     const v = e.target;
-    if (e.isIntersecting && !reduceMotion && !dlg.open) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); }
+    if (e.isIntersecting && !reduceMotion && !dlg.open && !document.hidden) {
+      if (!v.hasAttribute('src')) v.src = v.dataset.src;
+      v.play().catch(() => {});
+    }
     else v.pause();
   }
 }, { rootMargin: '120px 0px', threshold: 0.25 });
@@ -25,14 +25,14 @@ function tile(w, i) {
   const art = el('article', 'piece');
   const btn = el('button', 'piece-media');
   btn.type = 'button';
-  btn.setAttribute('aria-label', `Watch ${w.piece.name}`);
+  btn.setAttribute('aria-label', `${w.piece.kind === 'video' ? 'Watch' : 'View'} ${w.piece.name}`);
   const poster = w.asset.poster || (w.piece.kind !== 'video' ? w.asset.file : '');
-  if (w.piece.kind === 'video') {
+  if (w.asset.preview) {
     const v = el('video');
     Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'none', poster });
     v.defaultMuted = true;
     v.setAttribute('muted', ''); v.setAttribute('aria-hidden', 'true');
-    v.dataset.src = `previews/${w.piece.id}.mp4`;
+    v.dataset.src = w.asset.preview;
     btn.append(v); seen.observe(v);
   } else {
     const img = el('img');
@@ -48,44 +48,75 @@ function tile(w, i) {
 
 // ---------- viewer ----------
 const dlg = $('#viewer');
+let stopVimeo = () => {};
+
+function vimeoPlayer(w, source, box) {
+  const u = new URL(source);
+  const page = new URL(u.pathname.replace('/video/', '/'), 'https://vimeo.com');
+  const hash = u.searchParams.get('h');
+  if (hash) page.pathname += `/${hash}`;
+  for (const [key, value] of Object.entries({ autoplay: 1, title: 0, byline: 0, portrait: 0, dnt: 1, color: 'E0702A', api: 1 })) {
+    u.searchParams.set(key, value);
+  }
+  const m = el('iframe', 'v-vimeo');
+  m.referrerPolicy = 'strict-origin-when-cross-origin';
+  Object.assign(m, { src: u, allow: 'autoplay; fullscreen; picture-in-picture', title: w.piece.name });
+  m.allowFullscreen = true;
+  const width = Number(w.asset.width) || 16, height = Number(w.asset.height) || 9;
+  m.style.aspectRatio = `${width} / ${height}`;
+  m.style.setProperty('--r', width / height);
+
+  const onMsg = ev => {
+    if (ev.origin !== u.origin || ev.source !== m.contentWindow) return;
+    let data = ev.data;
+    if (typeof data === 'string') {
+      try { data = JSON.parse(data); } catch { return; }
+    }
+    if (data?.event === 'ready' || data?.method === 'ping') stopVimeo();
+  };
+  m.addEventListener('load', () => m.contentWindow?.postMessage({ method: 'ping' }, u.origin));
+  addEventListener('message', onMsg);
+  // Safari can show a Vimeo privacy error on the first load. Retry once.
+  const retry = setTimeout(() => {
+    if (!dlg.open) return;
+    const r = new URL(u);
+    r.searchParams.set('_r', Date.now());
+    m.src = r;
+  }, 3500);
+  const fallback = setTimeout(() => {
+    stopVimeo();
+    if (!dlg.open) return;
+    const still = w.asset.preview ? el('video') : el('img');
+    if (w.asset.preview) {
+      Object.assign(still, { src: w.asset.preview, poster: w.asset.poster, autoplay: true, loop: true, muted: true, playsInline: true });
+    } else {
+      Object.assign(still, { src: w.asset.poster, alt: w.piece.alt || '' });
+    }
+    const note = el('a', 'v-fallback', 'Open full video on Vimeo');
+    Object.assign(note, { href: page, target: '_blank', rel: 'noopener' });
+    box.replaceChildren(still, note);
+  }, 10000);
+  stopVimeo = () => {
+    clearTimeout(retry);
+    clearTimeout(fallback);
+    removeEventListener('message', onMsg);
+  };
+  return m;
+}
+
 function show(i) {
   current = (i + works.length) % works.length;
   const w = works[current];
   const box = $('#v-media');
-  clearTimeout(show.fallback); clearTimeout(show.retry); show.token = (show.token || 0) + 1;
+  stopVimeo();
   box.querySelectorAll('video').forEach(v => v.pause());
   let m;
-  if (w.piece.kind === 'video' && vimeo[w.piece.id]) {
-    const u = new URL(vimeo[w.piece.id]);
-    for (const [k, v] of Object.entries({ autoplay: 1, title: 0, byline: 0, portrait: 0, dnt: 1, color: 'E0702A', api: 1 })) u.searchParams.set(k, v);
-    m = el('iframe', 'v-vimeo');
-    m.referrerPolicy = 'strict-origin-when-cross-origin';
-    Object.assign(m, { src: u, allow: 'autoplay; fullscreen; picture-in-picture', title: w.piece.name });
-    m.allowFullscreen = true;
-    m.style.aspectRatio = `${w.asset.width} / ${w.asset.height}`;
-    m.style.setProperty('--r', w.asset.width / w.asset.height);
-    const token = show.token;
-    let ready = false, retried = false;
-    const onMsg = ev => { if (ev.source === m.contentWindow) ready = true; }; // the error page sends nothing
-    addEventListener('message', onMsg);
-    // Safari sometimes loads the first Vimeo player without the page's address, so Vimeo
-    // shows its privacy error; a second load works. Reload once if it isn't ready.
-    show.retry = setTimeout(() => {
-      if (ready || token !== show.token || !dlg.open) return;
-      retried = true; const r = new URL(u); r.searchParams.set('_r', Date.now()); m.src = r;
-    }, 3500);
-    show.fallback = setTimeout(() => {
-      removeEventListener('message', onMsg);
-      if (ready || token !== show.token || !dlg.open) return;
-      const v = el('video'); Object.assign(v, { src: `previews/${w.piece.id}.mp4`, autoplay: true, loop: true, muted: true, playsInline: true });
-      v.style.aspectRatio = m.style.aspectRatio;
-      const note = el('a', 'v-fallback', 'Open full video on Vimeo'); note.href = vimeo[w.piece.id].replace('player.vimeo.com/video/', 'vimeo.com/').replace('?h=', '/'); note.target = '_blank'; note.rel = 'noopener';
-      box.replaceChildren(v, note);
-    }, 10000);
+  if (w.piece.kind === 'video' && Object.hasOwn(vimeo, w.piece.id)) {
+    m = vimeoPlayer(w, vimeo[w.piece.id], box);
   } else if (w.piece.kind === 'video') {
     m = el('video');
     Object.assign(m, { src: w.asset.file, poster: w.asset.poster || '', controls: true, playsInline: true, autoplay: true });
-    m.addEventListener('ended', () => show(current + 1));
+    m.addEventListener('ended', () => { if (m.isConnected && dlg.open) show(current + 1); });
   } else {
     m = el('img');
     Object.assign(m, { src: w.asset.file, alt: w.piece.alt || '' });
@@ -95,8 +126,14 @@ function show(i) {
   $('#v-tag').textContent = w.piece.type || '';
   $('#v-title').textContent = w.piece.name;
   $('#v-desc').textContent = w.piece.description || '';
-  [...$('#v-strip').children].forEach((t, k) => t.setAttribute('aria-current', k === current ? 'true' : 'false'));
-  $('#v-strip').children[current]?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  const strip = $('#v-strip');
+  [...strip.children].forEach((t, k) => t.setAttribute('aria-current', k === current ? 'true' : 'false'));
+  const thumb = strip.children[current];
+  if (thumb) strip.scrollTo({
+    left: strip.scrollLeft + thumb.getBoundingClientRect().left - strip.getBoundingClientRect().left
+      - (strip.clientWidth - thumb.offsetWidth) / 2,
+    behavior: reduceMotion ? 'auto' : 'smooth',
+  });
 }
 function openViewer(i = 0) {
   if (!works.length) { pendingOpen = i; $('#open-viewer').classList.add('loading'); return; }
@@ -106,21 +143,22 @@ function openViewer(i = 0) {
   show(i);
 }
 function closeViewer() {
-  clearTimeout(show.fallback); clearTimeout(show.retry); show.token = (show.token || 0) + 1;
+  if (dlg.open) return;
+  stopVimeo();
   dlg.querySelectorAll('video').forEach(v => v.pause());
   $('#v-media').replaceChildren();
-  if (dlg.open) dlg.close();
   document.querySelectorAll('.piece video').forEach(v => { seen.unobserve(v); seen.observe(v); });
   heroResume();
 }
-$('#v-close').onclick = closeViewer;
+$('#v-close').onclick = () => dlg.close();
 $('#v-prev').onclick = () => show(current - 1);
 $('#v-next').onclick = () => show(current + 1);
 dlg.addEventListener('close', closeViewer);
 dlg.addEventListener('keydown', e => {
-  if (e.target.tagName === 'VIDEO' && (e.key === ' ')) return;
-  if (e.key === 'ArrowRight') show(current + 1);
-  if (e.key === 'ArrowLeft') show(current - 1);
+  if (e.target.tagName === 'VIDEO') return;
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  e.preventDefault();
+  show(current + (e.key === 'ArrowRight' ? 1 : -1));
 });
 let touchX = null;
 $('#v-media').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
@@ -145,17 +183,18 @@ async function load() {
     $('#piece-grid').replaceChildren(...works.map(tile));
     $('#piece-count').textContent = `${works.length} pieces`;
     $('#v-strip').replaceChildren(...works.map((w, i) => {
-      const t = el('button', 'v-thumb'); t.type = 'button'; t.setAttribute('role', 'listitem');
+      const t = el('button', 'v-thumb'); t.type = 'button';
       t.setAttribute('aria-label', w.piece.name);
       const im = el('img'); im.src = w.asset.poster || w.asset.file; im.alt = ''; im.loading = 'lazy';
       t.append(im); t.onclick = () => show(i); return t;
     }));
     status.hidden = works.length > 0;
+    if (!works.length) status.textContent = 'No work is available right now.';
     $('#open-viewer').classList.remove('loading');
-    if (pendingOpen !== null) { openViewer(pendingOpen); pendingOpen = null; }
     const hash = location.hash.slice(1);
     const at = works.findIndex(w => w.piece.id === hash);
-    if (at >= 0) openViewer(at);
+    if (works.length && (at >= 0 || pendingOpen !== null)) openViewer(at >= 0 ? at : pendingOpen);
+    pendingOpen = null;
   } catch (err) {
     status.hidden = false;
     status.textContent = 'The collection could not load. Please try again, or contact Nick for samples.';
