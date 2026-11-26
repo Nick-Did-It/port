@@ -115,5 +115,29 @@
     "file": null,
     "poster": "media/showreel-poster.jpg",
     "preview": "previews/showreel.mp4"
+  },
+  "animated-groove-deck": {
+    "width": 720,
+    "height": 900,
+    "duration": 9.0,
+    "file": null,
+    "poster": "media/animated-groove-deck-poster.jpg",
+    "preview": "previews/animated-groove-deck.mp4"
+  },
+  "animated-rain-tram": {
+    "width": 720,
+    "height": 900,
+    "duration": 10.0,
+    "file": null,
+    "poster": "media/animated-rain-tram-poster.jpg",
+    "preview": "previews/animated-rain-tram.mp4"
+  },
+  "ridge-no-01": {
+    "width": 1080,
+    "height": 1920,
+    "duration": 12.5,
+    "file": null,
+    "poster": "media/ridge-no-01-poster.jpg",
+    "preview": "previews/ridge-no-01.mp4"
   }
 }

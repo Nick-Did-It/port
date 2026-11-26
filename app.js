@@ -1,6 +1,6 @@
 'use strict';
 // Best first; anything not listed follows in pieces.json order.
-const ORDER = ['eros-and-erotica', 'soul-scale', 'chiral', 'room-that-assembles', 'boomerock', 'emberlea', 'amber-candle-film-v002', 'morning-grind', 'night-run', 'blender-melt', 'showreel', 'visualizer',
+const ORDER = ['eros-and-erotica', 'soul-scale', 'chiral', 'room-that-assembles', 'animated-groove-deck', 'animated-rain-tram', 'ridge-no-01', 'boomerock', 'emberlea', 'amber-candle-film-v002', 'morning-grind', 'night-run', 'blender-melt', 'showreel', 'visualizer',
   'skincare', 'soccer', 'opal-lighting-study-v002', 'afterhours-headphones-study-v001', 'amber-candle-study-v001'];
 const $ = s => document.querySelector(s);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };

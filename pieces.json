@@ -118,5 +118,29 @@
     "type": "Showreel",
     "kind": "video",
     "alt": "Showreel, self-directed work"
+  },
+  {
+    "id": "animated-groove-deck",
+    "name": "Groove Deck",
+    "description": "A fictional turntable launch built in Blender. The speed control starts the record, the needle lands, and the camera reveals the player and sleeve. Separate mechanism details and a held product view give the launch several useful edit points.",
+    "type": "3D product launch animation",
+    "kind": "video",
+    "alt": "3D product launch animation for the fictional Groove Deck concept"
+  },
+  {
+    "id": "animated-rain-tram",
+    "name": "Rain Tram",
+    "description": "A miniature night scene built in Blender. A tram arrives at a rain-lit platform, the doors open, and a passenger boards with a suitcase. The film ends on a wide station view with the tram at the platform.",
+    "type": "Game-world promotional sequence",
+    "kind": "video",
+    "alt": "Game-world promotional sequence for the fictional Rain Tram concept"
+  },
+  {
+    "id": "ridge-no-01",
+    "name": "Ridge No. 01",
+    "description": "A launch film for a fictional stoneware mug. The slope of a snowy mountain matches the raised green glaze before a final scene by the winter window. AI-accelerated spec.",
+    "type": "Stoneware product launch",
+    "kind": "video",
+    "alt": "An ivory and forest-green stoneware mug with a raised mountain pattern and a square handle in window light."
   }
 ]
