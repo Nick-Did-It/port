@@ -2,7 +2,7 @@
 @font-face{font-family:"EB Garamond";font-style:normal;font-weight:400 800;font-display:swap;src:url("media/fonts/eb-garamond-latin-wght-normal.woff2") format("woff2")}
 :root{
   --ground:#F7EFE2;--ink:#2A1A12;--muted:#6E5646;--rule:#E2CDB4;
-  --ember:#C8501F;--amber:#E39A2A;--gold:#F2C14E;--leaf:#6F7F2E;--violet:#7B4B8C;
+  --ember:#A8441B;--amber:#E39A2A;--gold:#F2C14E;--leaf:#6F7F2E;--violet:#7B4B8C;
   --display:"EB Garamond",Garamond,Georgia,serif;color-scheme:light;
 }
 @media(prefers-color-scheme:dark){:root{--ground:#1A120D;--ink:#F3E6D3;--muted:#BFA48A;--rule:#3B2A1F;--ember:#F07A3E;color-scheme:dark}}
@@ -21,6 +21,8 @@ a{color:var(--ember);text-decoration:none}
 .hero-copy{position:absolute;left:max(24px,4vw);top:max(20px,4vh);max-width:40rem;color:#C8501F;z-index:2}
 .hero-copy .byline{color:#A8441B;font-weight:600;font-size:1.05rem}
 .hero-copy .byline a{color:#A8441B}
+.hero-copy .byline{align-items:center}
+.avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #FFF4E6;box-shadow:0 2px 10px #0002;margin-right:.25rem}
 .hero h1{font-size:clamp(3.6rem,2rem + 7vw,7.5rem);font-weight:700;line-height:.95;margin:.1em 0 .25em;letter-spacing:-.01em}
 .cta{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 16px;border:0;border-radius:999px;background:#C8501F;color:#FFF4E6;font:700 .95rem var(--display);cursor:pointer;box-shadow:0 2px 10px #0002;transition:background .25s,transform .25s}
 .cta:hover{background:#E0702A;transform:translateY(-2px)}
