@@ -99,3 +99,17 @@ a{color:var(--ember);text-decoration:none}
 .contact:active{background:#C8501F26}
 .tri{width:0;height:0;border-left:9px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent;transition:transform .25s}
 .cta:hover .tri{transform:translateX(3px)}
+.code-work{padding:88px 0 40px;border-top:1px solid var(--rule);margin-top:72px}
+.code-work>.lead{margin:0 0 32px}
+.code-grid{display:grid;grid-template-columns:1fr;gap:48px}
+.code-card{min-width:0}
+.code-card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--rule)}
+.spec-reel .code-card .tag{margin:16px 0 0;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ember)}
+.spec-reel .code-card h3{font-size:1.45rem;font-weight:600;line-height:1.2;margin:4px 0 0}
+.spec-reel .code-card .code-lead{font-size:1.1rem;line-height:1.45;margin:8px 0 0}
+.code-card ul{margin:10px 0 0;padding-left:1.1em;font-size:1rem;line-height:1.5;color:var(--muted)}
+.code-card li{margin:4px 0}
+.code-card li::marker{color:var(--ember)}
+.spec-reel .code-card .links{margin-top:10px}
+.code-card .contact{font-size:1rem}
+@media(min-width:760px){.code-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 40px}}

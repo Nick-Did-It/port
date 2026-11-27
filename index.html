@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; frame-src https://player.vimeo.com; object-src 'none'; base-uri 'self'; form-action 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Watch Nick Goergen’s motion design portfolio: short product ads, launch videos and music films made with code, 3D animation and AI.">
-  <title>Nick Goergen | Product Ads, Launch Videos and Music Films</title>
+  <meta name="description" content="Nick Goergen’s portfolio: short product ads, launch videos and music films, plus the web apps, scrapers and automations he builds with code and AI.">
+  <title>Nick Goergen | Videos, Apps and Automations</title>
   <link rel="canonical" href="https://port.nickdidit.net/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://port.nickdidit.net/">
-  <meta property="og:title" content="Nick Goergen | Product Ads, Launch Videos and Music Films">
-  <meta property="og:description" content="Watch Nick Goergen’s motion design portfolio: short product ads, launch videos and music films made with code, 3D animation and AI.">
+  <meta property="og:title" content="Nick Goergen | Videos, Apps and Automations">
+  <meta property="og:description" content="Nick Goergen’s portfolio: short product ads, launch videos and music films, plus the web apps, scrapers and automations he builds with code and AI.">
   <meta property="og:image" content="https://port.nickdidit.net/scene/poster.jpg">
   <meta property="og:image:alt" content="Garden scene from Nick Goergen’s portfolio">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Nick Goergen | Product Ads, Launch Videos and Music Films">
-  <meta name="twitter:description" content="Watch Nick Goergen’s motion design portfolio: short product ads, launch videos and music films made with code, 3D animation and AI.">
+  <meta name="twitter:title" content="Nick Goergen | Videos, Apps and Automations">
+  <meta name="twitter:description" content="Nick Goergen’s portfolio: short product ads, launch videos and music films, plus the web apps, scrapers and automations he builds with code and AI.">
   <meta name="twitter:image" content="https://port.nickdidit.net/scene/poster.jpg">
   <meta name="twitter:image:alt" content="Garden scene from Nick Goergen’s portfolio">
   <script type="application/ld+json">
@@ -25,7 +25,7 @@
       {
         "@type": "WebSite",
         "@id": "https://port.nickdidit.net/#site",
-        "name": "Nick Goergen | Product Ads, Launch Videos and Music Films",
+        "name": "Nick Goergen | Videos, Apps and Automations",
         "url": "https://port.nickdidit.net/",
         "publisher": {
           "@id": "https://port.nickdidit.net/#nick"
@@ -34,9 +34,9 @@
       {
         "@type": "CollectionPage",
         "@id": "https://port.nickdidit.net/#portfolio",
-        "name": "Nick Goergen | Product Ads, Launch Videos and Music Films",
+        "name": "Nick Goergen | Videos, Apps and Automations",
         "url": "https://port.nickdidit.net/",
-        "description": "Watch Nick Goergen’s motion design portfolio: short product ads, launch videos and music films made with code, 3D animation and AI.",
+        "description": "Nick Goergen’s portfolio: short product ads, launch videos and music films, plus the web apps, scrapers and automations he builds with code and AI.",
         "isPartOf": {
           "@id": "https://port.nickdidit.net/#site"
         },
@@ -79,6 +79,38 @@
           "@id": "https://port.nickdidit.net/#nick"
         },
         "url": "https://port.nickdidit.net/#pieces"
+      },
+      {
+        "@type": "Service",
+        "name": "Members-only web apps",
+        "provider": {
+          "@id": "https://port.nickdidit.net/#nick"
+        },
+        "url": "https://port.nickdidit.net/#code"
+      },
+      {
+        "@type": "Service",
+        "name": "Request routing automation",
+        "provider": {
+          "@id": "https://port.nickdidit.net/#nick"
+        },
+        "url": "https://port.nickdidit.net/#code"
+      },
+      {
+        "@type": "Service",
+        "name": "Web scraping",
+        "provider": {
+          "@id": "https://port.nickdidit.net/#nick"
+        },
+        "url": "https://port.nickdidit.net/#code"
+      },
+      {
+        "@type": "Service",
+        "name": "App rescue for AI-built apps",
+        "provider": {
+          "@id": "https://port.nickdidit.net/#nick"
+        },
+        "url": "https://port.nickdidit.net/#code"
       }
     ]
   }
@@ -105,9 +137,10 @@
   <main class="spec-reel">
     <section class="intro">
       <p class="eyebrow">Independent concepts</p>
-      <p class="lead">Short videos: music films, product spots and launch clips, built with code, 3D and AI.</p>
+      <p class="lead">Short videos: music films, product spots and launch clips. Plus the web apps, scrapers and automations behind them. All built with code, 3D and AI.</p>
       <p class="links">
         <a class="contact" href="https://www.upwork.com/freelancers/~016a59fef2b0e52da1" target="_blank" rel="noopener">Hire on Upwork</a>
+        <a class="contact" href="#code">Code and systems</a>
         <a class="contact" href="https://nickdidit.net/" target="_blank" rel="noopener">More projects</a>
         <a class="contact" href="mailto:nick@nickdidit.net">Contact</a>
       </p>
@@ -120,6 +153,72 @@
       <p id="load-status" class="small" role="status">Loading the work…</p>
       <div id="piece-grid" class="piece-grid"></div>
       <noscript><p>Enable JavaScript to view this collection. You can also <a href="mailto:nick@nickdidit.net">contact Nick</a> for samples.</p></noscript>
+    </section>
+    <section aria-labelledby="code-heading" id="code" class="code-work" tabindex="-1">
+      <div class="collection-heading">
+        <h2 id="code-heading">Code and systems</h2>
+      </div>
+      <p class="lead">Web apps, scrapers and automations, built with Claude and Codex and tested before they go live.</p>
+      <div class="code-grid">
+        <article class="code-card" id="practice-app">
+          <img src="code/practice-app.webp" alt="The Practice companion app on nickdidit.net, showing the day’s practice beside a short list of what it includes, with Stripe staged in test mode and not yet open to members" width="1000" height="750" loading="lazy" decoding="async">
+          <p class="tag">Web app</p>
+          <h3>A members’ practice app, built solo</h3>
+          <p class="code-lead">I built the members’ platform on nickdidit.net solo in under two weeks. Practice is its installable companion app.</p>
+          <ul>
+            <li>Sign-in with email or Google, and saved progress</li>
+            <li>One engine runs every course: each course is data and prose, not a separate build</li>
+            <li>Installs on a phone like an app</li>
+            <li>Stripe subscriptions built and staged in test mode, not live yet</li>
+          </ul>
+          <p class="links">
+            <a class="contact" href="https://nickdidit.net/returning-voice/" target="_blank" rel="noopener">Try the free course</a>
+            <a class="contact" href="https://www.upwork.com/services/product/2117677106132407055" target="_blank" rel="noopener">Hire me for a members’ app</a>
+          </p>
+        </article>
+        <article class="code-card" id="request-routing">
+          <img src="code/request-routing.webp" alt="Diagram with made-up entries: form requests pass through an editable route table into filed, needs review and replies to approve" width="1000" height="750" loading="lazy" decoding="async">
+          <p class="tag">Automation</p>
+          <h3>Request routing for small teams</h3>
+          <p class="code-lead">Donations, orders, sign-ups and questions each land in their own tab. A demo, tested with made-up data.</p>
+          <ul>
+            <li>An editable route table your team can change</li>
+            <li>Missing fields and bad emails go to a review queue</li>
+            <li>Reply drafts wait for a person to approve them</li>
+            <li>Logs each processing step in Google Sheets, inside your own Google account</li>
+          </ul>
+        </article>
+        <article class="code-card" id="scraper-board">
+          <img src="code/scraper-board.webp" alt="Demo review board with made-up data: three scored cards, Listing A, B and C, with asking price, score and a match tag" width="1000" height="750" loading="lazy" decoding="async">
+          <p class="tag">Python · data</p>
+          <h3>Scraper to a ranked review board</h3>
+          <p class="code-lead">Messy listing sites in, a scored board and a clean CSV out.</p>
+          <ul>
+            <li>Nightly runs across three markets</li>
+            <li>De-duplicated and scored on the buyer’s own rules</li>
+            <li>One real run: 1,684 listings in, 91 actionable, 15 flagged for verification</li>
+            <li>The board here uses made-up listings; the client stays private</li>
+          </ul>
+          <p class="links">
+            <a class="contact" href="https://www.upwork.com/services/product/2117696939178479661" target="_blank" rel="noopener">Hire me for a scraper</a>
+          </p>
+        </article>
+        <article class="code-card" id="app-rescue">
+          <img src="code/app-rescue.webp" alt="Example checklist, not a client project: common bugs such as sign-in loops, failing checkout and exposed keys beside what I verify" width="1000" height="750" loading="lazy" decoding="async">
+          <p class="tag">Debugging</p>
+          <h3>App rescue for AI-built apps</h3>
+          <p class="code-lead">Apps made in Lovable, Bolt, Replit or Base44 that work in the editor and break live.</p>
+          <ul>
+            <li>I find the cause and quote the fix before I touch anything</li>
+            <li>Common bugs: sign-in loops, failing checkouts, exposed keys, broken deploys</li>
+            <li>A second AI model reviews each fix before you get it. In my own code that review caught a month-boundary bug before it merged</li>
+            <li>You get a short note on what broke and how it was fixed</li>
+          </ul>
+          <p class="links">
+            <a class="contact" href="https://www.upwork.com/services/product/2117687525243506733" target="_blank" rel="noopener">Hire me for bug fixes</a>
+          </p>
+        </article>
+      </div>
     </section>
   </main>
 
